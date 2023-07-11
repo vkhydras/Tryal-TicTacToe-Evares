@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    background-color: #252A34;
+    background-image: linear-gradient(240deg, #252a34 0%, #252a34 50%, #008080 50%, #008080 100%);
+    color: white;
+    font-family: 'Josefin Sans',sans-serif;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+  }
+  .boardBody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    background: transparent;
+    color: white;
+    font-family: 'Josefin Sans',sans-serif;
+
+  }
+  .winning-row {
+  background-color:#08D9D6; 
+  animation-name: winning;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  }
+  .winning-message{
+  animation-name:  winningMesage;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  }
+  .turnContainer{
+  margin: 10px;
+  }
+  
+  .board{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 300px;
+    margin: auto;
+    margin-top: 8px;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .cell{
+    width: 100px;
+    height: 100px;
+   border: 2px solid black;
+   font-size: 75px;
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: 1s;
+  }
+  .NotClickedcell:hover{
+  transition: 1s;
+  transform: scale(1.05,1.05);
+  background-color: rgba(154, 115, 17, 0.897);
+  }
+  .cell:active{
+  transform: rotate(20deg) ;
+  transition: 0.5s;
+  
+  }
+  #turn{
+    font-size: 60px;
+  }
+  .turnBox{
+    width: 153px;
+    height: 55px;
+    border: 2px solid black;
+    font-size: 60px;
+    text-align: center;
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .turnContainer{
+    display: flex;
+  
+  }
+  
+  button{
+    background-color: rgba(0, 50, 50, 0.808);
+    background-image: linear-gradient(to bottom left, teal, magenta);
+    width: 200px;
+    padding: 10px;
+    font-size: 30px;
+    margin-top: 20px;
+    transition: 1s;
+    border-radius: 10px;
+    border: solid 1px black;
+    font-family: "Changa One", sans-serif;
+  }
+  button:hover{
+    transform: scale(1.1,1.1);
+    background-color: black;
+    background-image: linear-gradient(to bottom left, magenta, teal);
+    transition: 0.5s;
+    
+  }
+  button:active{
+  transform: rotate3d(20deg);
+  }
+  @media only screen and (max-width: 767px) {
+    .board {
+      width: 100vw;
+      max-width: 300px;
+    }
+  
+    .cell {
+      width: 96px;
+      height: 80px;
+      font-size: 60px;
+    }
+  
+    #turn {
+      font-size: 40px;
+    }
+  
+    .turnBox {
+      width: 120px;
+      height: 40px;
+      font-size: 40px;
+    }
+    button {
+      font-size: 20px;
+    }
+  }
+  
+  @keyframes winning {
+    from {transform: scale(1,1) rotate(0deg);}
+    to {transform: scale(1.1,1.1) rotate(10deg);}
+  }
+  @keyframes winningMesage {
+    from{transform: scale(1,1);}
+    to{transform: scale(1.3,1.3);}
+  }
+
+  @media (max-aspect-ratio: 7/16) {
+      body {
+        background-image: linear-gradient(270deg, #252a34 0%, #252a34 50%, #008080 50%, #008080 100%);
+      }
+  }
