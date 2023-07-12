@@ -30,23 +30,25 @@ function App() {
     [2, 4, 6],
   ];
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/games")
-      .then((response) => {
-        const { board } = response.data;
-        setCells(
-          board.map((value, index) => ({
-            value,
-            id: index,
-            clicked: !!value,
-          }))
-        );
-      })
-      .catch((error) => {
-        console.error("Error retrieving game:", error);
-      });
-  }, []);
+ // ...
+
+useEffect(() => {
+  axios
+    .get("http://localhost:5000/games")
+    .then((response) => {
+      const { board } = response.data;
+      setCells(board.map((value, index) => ({ value, id: index, clicked: !!value })));
+    })
+    .catch((error) => {
+      console.error("Error retrieving game:", error);
+    });
+}, []);
+
+// ...
+
+
+  
+  
 
   useEffect(() => {
     if (win) {
@@ -82,7 +84,7 @@ function App() {
         return cell;
       });
       setXturn((prev) => !prev); // Toggle Xturn
-
+  
       axios
         .put("http://localhost:5000/games", {
           board: newCells.map((cell) => cell.value),
@@ -93,13 +95,15 @@ function App() {
         .catch((error) => {
           console.error("Error updating game:", error);
         });
-
+  
+      checkWinner(newCells); // Call checkWinner() after updating the cells
+  
       return newCells;
     });
-    checkWinner();
   }
+  
 
-  function checkWinner() {
+  function checkWinner(cells) {
     const options = cells.map((cell) => cell.value);
     for (let i of winningCombo) {
       let [a, b, c] = i;
@@ -119,6 +123,7 @@ function App() {
       setGameOver(true);
     }
   }
+  
 
   function restart() {
     new Audio(clickSound).play();
@@ -132,7 +137,7 @@ function App() {
   }
 
   function exit() {
-    // Perform any necessary actions or redirect the user
+    window.close()
     console.log("Exit button clicked");
   }
 
