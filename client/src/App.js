@@ -32,17 +32,23 @@ function App() {
 
  // ...
 
-useEffect(() => {
+ useEffect(() => {
   axios
     .get("http://localhost:5000/games")
     .then((response) => {
-      const { board } = response.data;
+      const { board, status } = response.data;
       setCells(board.map((value, index) => ({ value, id: index, clicked: !!value })));
+
+      if (status === "completed") {
+        setDraw(true);
+        setWinner("");
+      }
     })
     .catch((error) => {
       console.error("Error retrieving game:", error);
     });
 }, []);
+
 
 // ...
 
@@ -127,15 +133,27 @@ useEffect(() => {
 
   function restart() {
     new Audio(clickSound).play();
+  
+    axios
+      .post("http://localhost:5000/games", {
+        board: createCells().map((cell) => cell.value),
+      })
+      .then((response) => {
+        const { board } = response.data;
+        setCells(board.map((value, index) => ({ value, id: index, clicked: !!value })));
+      })
+      .catch((error) => {
+        console.error("Error creating game:", error);
+      });
+  
     setGameOver(false);
     setDraw(false);
     setWin(false);
     setWinningCells("");
-    setCells(createCells());
     setXturn(true);
     setGameStatus(false);
   }
-
+  
   function exit() {
     window.close()
     console.log("Exit button clicked");

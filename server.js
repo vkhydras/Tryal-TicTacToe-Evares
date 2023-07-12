@@ -8,7 +8,7 @@ app.use(cors());
 
 // Connect to MongoDB
 
-mongoose.connect("mongodb+srv://victorkimaru8:😁<password>😁@cluster0.3clz1wb.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://victorkimaru8:stvick.9028@cluster0.3clz1wb.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -16,6 +16,7 @@ mongoose.connect("mongodb+srv://victorkimaru8:😁<password>😁@cluster0.3clz1w
 }).catch((err) => {
   console.error('Error connecting to MongoDB:', err);
 });
+
 
 // Define the move schema
 const moveSchema = new mongoose.Schema({
@@ -70,23 +71,33 @@ app.post("/games", async (req, res) => {
     res.status(500).send("Error creating game");
   }
 });
-
+// Retrieve game data
 // Retrieve game data
 app.get("/games", async (req, res) => {
   try {
-    let game = await Game.findOne({});
-    
-    if (!game) {
+    const game = await Game.findOne({ status: "ongoing" });
+
+    if (game) {
+      res.json(game);
+    } else {
       const newGame = new Game({ board: createCells().map((cell) => cell.value) });
-      game = await newGame.save();
+      const savedGame = await newGame.save();
+      res.json(savedGame);
     }
-    
-    res.json(game);
   } catch (err) {
     console.error("Error retrieving game:", err);
     res.status(500).send("Error retrieving game");
   }
 });
+
+// ...
+
+
+
+
+
+
+
 
 
 // Update game data and log moves
